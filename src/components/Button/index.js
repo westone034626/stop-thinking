@@ -1,6 +1,15 @@
 import { forwardRef } from 'react';
 
-const Button = forwardRef(function Button({ children, onClick, onTouchStart, onTouchEnd, disabled, style }, ref) {
+const Button = forwardRef(function Button({
+    children,
+    onClick,
+    onTouchStart,
+    onTouchEnd,
+    onMouseDown,
+    onMouseUp,
+    disabled,
+    style
+}, ref) {
     const styles = {
         disabled: {
             cursor: 'not-allowed',
@@ -18,6 +27,8 @@ const Button = forwardRef(function Button({ children, onClick, onTouchStart, onT
             ref={ref}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
             onClick={onClick}
             style={buttonStyle}
             disabled={disabled}

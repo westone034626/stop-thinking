@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Brain from './assets/icons/brain.webp';
 import FingerPrint from './assets/icons/fingerprint.webp';
 import Reset from './assets/icons/reset.webp';
 import { Button, Spacer } from './components';
@@ -64,6 +63,8 @@ export default function Main() {
                     style={styles.fingerPrintContainer}
                     onTouchStart={() => setIsFingerPrintActive(true)}
                     onTouchEnd={() => setIsFingerPrintActive(false)}
+                    onMouseDown={() => setIsFingerPrintActive(true)}
+                    onMouseUp={() => setIsFingerPrintActive(false)}
                 >
                     <img style={styles.fingerPrint} src={FingerPrint} width={56} height={56} draggable="false" />
                 </Button>
@@ -78,6 +79,11 @@ export default function Main() {
                     style={styles.resetContainer}
                     onTouchStart={() => setIsResetActive(true)}
                     onTouchEnd={() => {
+                        resetRemainingSeconds();
+                        setIsResetActive(false);
+                    }}
+                    onMouseDown={() => setIsResetActive(true)}
+                    onMouseUp={() => {
                         resetRemainingSeconds();
                         setIsResetActive(false);
                     }}
