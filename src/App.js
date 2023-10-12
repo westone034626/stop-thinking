@@ -1,6 +1,7 @@
 import Main from "./Main";
 import './index.css';
 import { MAX_MOBILE_WIDTH } from './constant';
+import { useEffect } from "react";
 
 function Layout({ children }) {
   const styles = {
@@ -17,6 +18,23 @@ function Layout({ children }) {
 }
 
 function App() {
+  useEffect(() => {
+    document.addEventListener("gesturestart", function (e) {
+      e.preventDefault();
+      document.body.style.zoom = 1;
+    });
+
+    document.addEventListener("gesturechange", function (e) {
+      e.preventDefault();
+
+      document.body.style.zoom = 1;
+    });
+    document.addEventListener("gestureend", function (e) {
+      e.preventDefault();
+      document.body.style.zoom = 1;
+    });
+  }, []);
+
   return (
     <Layout>
       <Main />

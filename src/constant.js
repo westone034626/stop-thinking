@@ -1,3 +1,5 @@
+const INITIAL_REMAINING_SECONDS = 300;
+
 const MAX_MOBILE_WIDTH = 721;
 
 const FONT_WEIGHT_MAP = {
@@ -136,4 +138,5 @@ export {
     fontStyleMap,
     shapeStyleMap,
     SHAPE_COLOR_MAP,
+    INITIAL_REMAINING_SECONDS,
 };

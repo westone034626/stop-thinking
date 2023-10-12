@@ -1,42 +1,92 @@
+import { useEffect, useState } from 'react';
 import Brain from './assets/icons/brain.webp';
 import FingerPrint from './assets/icons/fingerprint.webp';
-import Replay from './assets/icons/replay.webp';
-import { Spacer } from './components';
+import Reset from './assets/icons/reset.webp';
+import { Button, Spacer } from './components';
+import { INITIAL_REMAINING_SECONDS, SHAPE_COLOR_MAP } from './constant';
+import { attachLeadingZero, convertSecondsToMinutesAndSeconds } from './utils';
 
 export default function Main() {
+    const [remainingSeconds, setRemainingSeconds] = useState(INITIAL_REMAINING_SECONDS);
+
+    const [isFingerPrintActive, setIsFingerPrintActive] = useState(false);
+    const [isResetActive, setIsResetActive] = useState(false);
+
+    useEffect(() => {
+        if (isFingerPrintActive) {
+            const timeId = setInterval(() => {
+                setRemainingSeconds(prev => prev > 0 ? prev - 1 : prev);
+            }, 1000);
+
+            return () => clearInterval(timeId);
+        }
+    }, [isFingerPrintActive]);
+
+    const displayTime = (seconds) => {
+        const time = convertSecondsToMinutesAndSeconds(seconds);
+
+        return `${attachLeadingZero(time.minutes)}:${attachLeadingZero(time.seconds)}`;
+    };
+
     const styles = {
-        container: { alignItems: 'center', margin: 'auto 0px' },
+        container: { alignItems: 'center', margin: 'auto 0px', backgroundColor: SHAPE_COLOR_MAP.white },
         brain: {},
         timer: { fontSize: 60 },
-        finterPrintList: {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '100%',
-            padding: '0px 40px',
-        },
+        fingerPrintContainer: { backgroundColor: SHAPE_COLOR_MAP.white, padding: 57, margin: -57 },
         fingerPrint: {},
-        finterPrintOverLay: {},
-        replay: {},
+        touchAreaOverLay: {
+            position: 'absolute',
+            width: 105,
+            height: 105,
+            backgroundColor: '#0F30E0',
+            opacity: '0.07',
+            borderRadius: '100%',
+            pointerEvents: 'none',
+        },
+        resetContainer: { backgroundColor: SHAPE_COLOR_MAP.white, padding: 57, margin: -57 },
+        reset: {},
     };
+
+    const resetRemainingSeconds = () => setRemainingSeconds(INITIAL_REMAINING_SECONDS);
 
     return (
         <div style={styles.container}>
-            <img style={styles.brain} src={Brain} width={82} height={82} />
+            {/* <img style={styles.brain} src={Brain} width={82} height={82} />
 
-            <Spacer spacing={18} />
+            <Spacer spacing={18} /> */}
 
-            <p style={styles.timer}>05:00:00</p>
+            <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
 
             <Spacer spacing={20} />
 
-            <div style={styles.finterPrintList}>
-                <img style={styles.fingerPrint} src={FingerPrint} width={56} height={56} />
-                <img style={styles.fingerPrint} src={FingerPrint} width={56} height={56} />
+            <div style={{ position: 'relative', justifyContent: 'center', alignItems: 'center', }}>
+                <Button
+                    style={styles.fingerPrintContainer}
+                    onTouchStart={() => setIsFingerPrintActive(true)}
+                    onTouchEnd={() => setIsFingerPrintActive(false)}
+                >
+                    <img style={styles.fingerPrint} src={FingerPrint} width={56} height={56} draggable="false" />
+                </Button>
+
+                {isFingerPrintActive && <div style={styles.touchAreaOverLay}></div>}
             </div>
 
             <Spacer spacing={20} />
 
-            <img style={styles.replay} src={Replay} width={48} height={48} />
+            <div style={{ position: 'relative', justifyContent: 'center', alignItems: 'center', }}>
+                <Button
+                    style={styles.resetContainer}
+                    onTouchStart={() => setIsResetActive(true)}
+                    onTouchEnd={() => {
+                        resetRemainingSeconds();
+                        setIsResetActive(false);
+                    }}
+                >
+                    <img style={styles.reset} src={Reset} width={48} height={48} />
+                </Button>
+
+                {isResetActive && <div style={styles.touchAreaOverLay}></div>}
+            </div>
         </div>
     );
 }

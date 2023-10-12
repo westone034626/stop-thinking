@@ -1,4 +1,6 @@
-function Button({ children, onClick, disabled, style }) {
+import { forwardRef } from 'react';
+
+const Button = forwardRef(function Button({ children, onClick, onTouchStart, onTouchEnd, disabled, style }, ref) {
     const styles = {
         disabled: {
             cursor: 'not-allowed',
@@ -13,6 +15,9 @@ function Button({ children, onClick, disabled, style }) {
 
     return (
         <button
+            ref={ref}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
             onClick={onClick}
             style={buttonStyle}
             disabled={disabled}
@@ -20,6 +25,6 @@ function Button({ children, onClick, disabled, style }) {
             {children}
         </button>
     );
-}
+});
 
 export default Button;
