@@ -67,22 +67,6 @@ export default function Main() {
 
             <div style={{ position: 'relative', justifyContent: 'center', alignItems: 'center', }}>
                 <Button
-                    style={styles.fingerPrintContainer}
-                    onTouchStart={() => setIsFingerPrintActive(true)}
-                    onTouchEnd={() => setIsFingerPrintActive(false)}
-                    onMouseDown={() => setIsFingerPrintActive(true)}
-                    onMouseUp={() => setIsFingerPrintActive(false)}
-                >
-                    <img style={styles.fingerPrint} src={FingerPrint} width={56} height={56} draggable="false" />
-                </Button>
-
-                {isFingerPrintActive && <div style={styles.touchAreaOverLay}></div>}
-            </div>
-
-            <Spacer spacing={20} />
-
-            <div style={{ position: 'relative', justifyContent: 'center', alignItems: 'center', }}>
-                <Button
                     style={styles.resetContainer}
                     onTouchStart={() => setIsResetActive(true)}
                     onTouchEnd={() => {
@@ -99,6 +83,22 @@ export default function Main() {
                 </Button>
 
                 {isResetActive && <div style={styles.touchAreaOverLay}></div>}
+            </div>
+
+            <Spacer spacing={20} />
+
+            <div style={{ position: 'relative', justifyContent: 'center', alignItems: 'center', }}>
+                <Button
+                    style={styles.fingerPrintContainer}
+                    onTouchStart={() => setIsFingerPrintActive(true)}
+                    onTouchEnd={() => setIsFingerPrintActive(false)}
+                    onMouseDown={() => setIsFingerPrintActive(true)}
+                    onMouseUp={() => setIsFingerPrintActive(false)}
+                >
+                    <img style={styles.fingerPrint} src={FingerPrint} width={56} height={56} draggable="false" />
+                </Button>
+
+                {isFingerPrintActive && <div style={styles.touchAreaOverLay}></div>}
             </div>
         </div>
     );
