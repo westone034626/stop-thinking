@@ -12,13 +12,20 @@ export default function Main() {
     const [isResetActive, setIsResetActive] = useState(false);
 
     useEffect(() => {
-        if (isFingerPrintActive) {
-            const timeId = setInterval(() => {
-                setRemainingSeconds(prev => prev > 0 ? prev - 1 : prev);
-            }, 1000);
+        const timeId = setInterval(() => {
+            setRemainingSeconds(prev => {
+                if (isFingerPrintActive) {
+                    return prev > 0 ? prev - 1 : prev;
+                } else {
+                    if (prev === 0) {
+                        return 0;
+                    }
+                    return prev < INITIAL_REMAINING_SECONDS ? prev + 1 : prev;
+                }
+            });
+        }, 1000);
 
-            return () => clearInterval(timeId);
-        }
+        return () => clearInterval(timeId);
     }, [isFingerPrintActive]);
 
     const displayTime = (seconds) => {
@@ -31,7 +38,7 @@ export default function Main() {
         container: { alignItems: 'center', margin: 'auto 0px', backgroundColor: SHAPE_COLOR_MAP.white },
         brain: {},
         timer: { fontSize: 60 },
-        fingerPrintContainer: { backgroundColor: SHAPE_COLOR_MAP.white, padding: 57, margin: -57 },
+        fingerPrintContainer: { backgroundColor: SHAPE_COLOR_MAP.white, padding: 20, margin: -20 },
         fingerPrint: {},
         touchAreaOverLay: {
             position: 'absolute',
@@ -42,7 +49,7 @@ export default function Main() {
             borderRadius: '100%',
             pointerEvents: 'none',
         },
-        resetContainer: { backgroundColor: SHAPE_COLOR_MAP.white, padding: 57, margin: -57 },
+        resetContainer: { backgroundColor: SHAPE_COLOR_MAP.white, padding: 20, margin: -20 },
         reset: {},
     };
 
