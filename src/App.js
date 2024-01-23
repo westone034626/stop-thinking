@@ -1,7 +1,8 @@
+import { createContext, useContext, useEffect } from "react";
+import { Helmet } from 'react-helmet';
 import Main from "./Main";
 import './index.css';
 import { MAX_MOBILE_WIDTH } from './constant';
-import { createContext, useContext, useEffect } from "react";
 import { Header, NumberOfCountByDateProvider, ThemeProvider } from "./components";
 import { ThemeContext } from "./components/ThemeProvider";
 
@@ -22,6 +23,10 @@ function Layout({ children }) {
 
   return (
     <div style={styles.container}>
+      <Helmet>
+        <meta name="theme-color" content={theme.backgroundColor} />
+      </Helmet>
+
       <div style={styles.innerContainer}>
         <Header />
 
