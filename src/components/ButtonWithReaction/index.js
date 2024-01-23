@@ -6,6 +6,11 @@ const DEFAULT_RADIUS = 52;
 
 const ButtonWithReaction = ({ children, radius, ...otherProps }) => {
     const [isActive, setIsActive] = useState();
+    const handleIsActive = (dataOrFunc) => {
+        if (!otherProps.disabled) {
+            setIsActive(dataOrFunc);
+        }
+    };
     const { theme } = useContext(ThemeContext);
 
     const overlayRadius = radius ?? DEFAULT_RADIUS;
@@ -23,25 +28,25 @@ const ButtonWithReaction = ({ children, radius, ...otherProps }) => {
     };
 
     const handleTouchStart = (e) => {
-        setIsActive(true);
+        handleIsActive(true);
 
         otherProps.onTouchStart && otherProps.onTouchStart(e);
     };
 
     const handleTouchEnd = (e) => {
-        setIsActive(false);
+        handleIsActive(false);
 
         otherProps.onTouchEnd && otherProps.onTouchEnd(e);
     };
 
     const handleMouseDown = (e) => {
-        setIsActive(true);
+        handleIsActive(true);
 
         otherProps.onMouseDown && otherProps.onMouseDown(e);
     };
 
     const handleMouseUp = (e) => {
-        setIsActive(false);
+        handleIsActive(false);
 
         otherProps.onMouseUp && otherProps.onMouseUp(e);
     };

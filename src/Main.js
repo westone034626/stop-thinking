@@ -107,6 +107,7 @@ export default function Main() {
             <Spacer spacing={20} />
 
             <ButtonWithReaction
+                disabled={INITIAL_REMAINING_SECONDS <= remainingSeconds}
                 onTouchEnd={resetRemainingSeconds}
                 onMouseUp={resetRemainingSeconds}
             >
