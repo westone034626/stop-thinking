@@ -1,4 +1,5 @@
-import { forwardRef } from 'react';
+import { forwardRef, useContext } from 'react';
+import { LayoutContext } from '../../App';
 
 const Button = forwardRef(function Button({
     children,
@@ -10,6 +11,8 @@ const Button = forwardRef(function Button({
     disabled,
     style
 }, ref) {
+    const { theme } = useContext(LayoutContext);
+
     const styles = {
         disabled: {
             cursor: 'not-allowed',
@@ -20,6 +23,7 @@ const Button = forwardRef(function Button({
     const buttonStyle = {
         ...style,
         ...(disabled ? styles.disabled : {}),
+        ...theme,
     };
 
     return (

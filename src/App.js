@@ -3,6 +3,9 @@ import './index.css';
 import { ColorMap, MAX_MOBILE_WIDTH } from './constant';
 import { createContext, useEffect, useMemo } from "react";
 import { useLocalStorageState } from "ahooks";
+import DarkModeIcon from './assets/icons/dark-mode.webp';
+import LightModeIcon from './assets/icons/light-mode.webp';
+import { ButtonWithReaction } from "./components";
 
 export const LayoutContext = createContext();
 
@@ -16,23 +19,40 @@ function LayoutProvider({ children }) {
   }), [isDarkMode]);
 
   const styles = {
-    container: { flex: 1, ...layoutContext.theme },
+    container: { flex: 1, position: 'relative', ...layoutContext.theme },
     innerContainer: {
       flex: 1,
       width: '100%',
       maxWidth: MAX_MOBILE_WIDTH,
       margin: '0px auto',
-    }
+    },
+    modeChanger: {
+      position: 'absolute',
+      top: 24,
+      right: 24,
+    },
+    modeIcon: {},
   };
 
+  const modeIcon = isDarkMode ? LightModeIcon : DarkModeIcon;
+
   return (
-    <div style={styles.container}>
-      <div style={styles.innerContainer}>
-        <LayoutContext.Provider value={layoutContext}>
+    <LayoutContext.Provider value={layoutContext}>
+      <div style={styles.container}>
+        <div style={styles.innerContainer}>
           {children}
-        </LayoutContext.Provider>
+
+          <div style={styles.modeChanger}>
+            <ButtonWithReaction
+              onClick={layoutContext.toggleIsDarkMode}
+              radius={24}
+            >
+              <img style={styles.modeIcon} src={modeIcon} width={24} height={24} />
+            </ButtonWithReaction>
+          </div>
+        </div>
       </div>
-    </div>
+    </LayoutContext.Provider>
   );
 }
 

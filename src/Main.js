@@ -3,7 +3,7 @@ import FingerPrint from './assets/icons/fingerprint.webp';
 import Reset from './assets/icons/reset.webp';
 import DReset from './assets/icons/reset-dark_mode.webp';
 import DFingerPrint from './assets/icons/fingerprint-dark_mode.webp';
-import { Button, Spacer } from './components';
+import { ButtonWithReaction, Spacer } from './components';
 import { INITIAL_REMAINING_SECONDS } from './constant';
 import { attachLeadingZero, convertSecondsToMinutesAndSeconds } from './utils';
 import { LayoutContext } from './App';
@@ -14,7 +14,6 @@ export default function Main() {
     const [remainingSeconds, setRemainingSeconds] = useState(INITIAL_REMAINING_SECONDS);
 
     const [isFingerPrintActive, setIsFingerPrintActive] = useState(false);
-    const [isResetActive, setIsResetActive] = useState(false);
 
     useEffect(() => {
         const timeId = setInterval(() => {
@@ -80,41 +79,27 @@ export default function Main() {
 
             <Spacer spacing={20} />
 
-            <div style={{ position: 'relative', justifyContent: 'center', alignItems: 'center', }}>
-                <Button
-                    style={styles.resetContainer}
-                    onTouchStart={() => setIsResetActive(true)}
-                    onTouchEnd={() => {
-                        resetRemainingSeconds();
-                        setIsResetActive(false);
-                    }}
-                    onMouseDown={() => setIsResetActive(true)}
-                    onMouseUp={() => {
-                        resetRemainingSeconds();
-                        setIsResetActive(false);
-                    }}
-                >
+            <ButtonWithReaction
+                onTouchEnd={resetRemainingSeconds}
+                onMouseUp={resetRemainingSeconds}
+            >
+                <div style={styles.resetContainer}>
                     <img style={styles.reset} src={resetIcon} width={48} height={48} />
-                </Button>
-
-                {isResetActive && <div style={styles.touchAreaOverLay}></div>}
-            </div>
+                </div>
+            </ButtonWithReaction>
 
             <Spacer spacing={20} />
 
-            <div style={{ position: 'relative', justifyContent: 'center', alignItems: 'center', }}>
-                <Button
-                    style={styles.fingerPrintContainer}
-                    onTouchStart={() => setIsFingerPrintActive(true)}
-                    onTouchEnd={() => setIsFingerPrintActive(false)}
-                    onMouseDown={() => setIsFingerPrintActive(true)}
-                    onMouseUp={() => setIsFingerPrintActive(false)}
-                >
+            <ButtonWithReaction
+                onTouchStart={() => setIsFingerPrintActive(true)}
+                onTouchEnd={() => setIsFingerPrintActive(false)}
+                onMouseDown={() => setIsFingerPrintActive(true)}
+                onMouseUp={() => setIsFingerPrintActive(false)}
+            >
+                <div style={styles.fingerPrintContainer}>
                     <img style={styles.fingerPrint} src={fingerPrintIcon} width={56} height={56} draggable="false" />
-                </Button>
-
-                {isFingerPrintActive && <div style={styles.touchAreaOverLay}></div>}
-            </div>
+                </div>
+            </ButtonWithReaction>
         </div>
     );
 }
