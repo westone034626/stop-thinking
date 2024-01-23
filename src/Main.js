@@ -7,9 +7,11 @@ import { ButtonWithReaction, Spacer } from './components';
 import { INITIAL_REMAINING_SECONDS } from './constant';
 import { attachLeadingZero, convertSecondsToMinutesAndSeconds } from './utils';
 import { LayoutContext } from './App';
+import useTodayCount from './hooks/useTodayCount';
 
 export default function Main() {
-    const { isDarkMode, theme } = useContext(LayoutContext);
+    const { todayCount, increaseTodayCount } = useTodayCount();
+    const { isDarkMode, theme, reverseTheme } = useContext(LayoutContext);
 
     const [remainingSeconds, setRemainingSeconds] = useState(INITIAL_REMAINING_SECONDS);
 
@@ -19,6 +21,9 @@ export default function Main() {
         const timeId = setInterval(() => {
             setRemainingSeconds(prev => {
                 if (isFingerPrintActive) {
+                    if (prev === 1) {
+                        increaseTodayCount();
+                    }
                     return prev > 0 ? prev - 1 : prev;
                 } else {
                     if (prev === 0) {
@@ -30,7 +35,7 @@ export default function Main() {
         }, 1000);
 
         return () => clearInterval(timeId);
-    }, [isFingerPrintActive]);
+    }, [isFingerPrintActive, increaseTodayCount]);
 
     const displayTime = (seconds) => {
         const time = convertSecondsToMinutesAndSeconds(seconds);
@@ -45,6 +50,19 @@ export default function Main() {
             ...theme,
         },
         brain: {},
+        badgeAndTimerContainer: {
+            position: 'relative',
+        },
+        badge: {
+            position: 'absolute',
+            top: -20,
+            right: -16,
+            padding: 4,
+            borderRadius: 4,
+            ...reverseTheme,
+        },
+        badgeLabel: {
+        },
         timer: {
             fontSize: 60,
             ...theme,
@@ -75,7 +93,13 @@ export default function Main() {
 
             <Spacer spacing={18} /> */}
 
-            <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
+            <div style={styles.badgeAndTimerContainer}>
+                <div style={styles.badge}>
+                    <span style={styles.badgeLabel}>{todayCount}</span>
+                </div>
+
+                <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
+            </div>
 
             <Spacer spacing={20} />
 

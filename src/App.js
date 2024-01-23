@@ -16,6 +16,7 @@ function LayoutProvider({ children }) {
     isDarkMode,
     toggleIsDarkMode: () => setIsDarkMode((p) => !p),
     theme: ColorMap[isDarkMode ? 'dark' : 'light'],
+    reverseTheme: ColorMap[isDarkMode ? 'light' : 'dark'],
   }), [isDarkMode]);
 
   const styles = {
