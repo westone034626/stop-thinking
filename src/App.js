@@ -1,15 +1,17 @@
 import Main from "./Main";
 import './index.css';
 import { ColorMap, MAX_MOBILE_WIDTH } from './constant';
-import { createContext, useEffect, useMemo, useReducer } from "react";
+import { createContext, useEffect, useMemo } from "react";
+import { useLocalStorageState } from "ahooks";
 
 export const LayoutContext = createContext();
 
 function LayoutProvider({ children }) {
-  const [isDarkMode, toggleIsDarkMode] = useReducer((s) => !s, false);
+  const [isDarkMode, setIsDarkMode] = useLocalStorageState('@stop-thinking/is-dark-mode', { defaultValue: false });
+
   const layoutContext = useMemo(() => ({
     isDarkMode,
-    toggleIsDarkMode,
+    toggleIsDarkMode: () => setIsDarkMode((p) => !p),
     theme: ColorMap[isDarkMode ? 'dark' : 'light'],
   }), [isDarkMode]);
 
