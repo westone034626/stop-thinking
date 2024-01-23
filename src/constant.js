@@ -133,10 +133,12 @@ const ColorMap = {
     light: {
         color: '#242424',
         backgroundColor: '#FFFFFF',
+        accent: '#836BFF',
     },
     dark: {
         color: '#EDEDED',
         backgroundColor: '#292929',
+        accent: '#836BFF',
     },
 };
 

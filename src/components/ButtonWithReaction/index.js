@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '../Button';
+import { ThemeContext } from '../ThemeProvider';
 
 const DEFAULT_RADIUS = 52;
 
 const ButtonWithReaction = ({ children, radius, ...otherProps }) => {
     const [isActive, setIsActive] = useState();
+    const { theme } = useContext(ThemeContext);
 
     const overlayRadius = radius ?? DEFAULT_RADIUS;
 
@@ -13,7 +15,7 @@ const ButtonWithReaction = ({ children, radius, ...otherProps }) => {
             position: 'absolute',
             width: overlayRadius * 2,
             height: overlayRadius * 2,
-            backgroundColor: '#0F30E0',
+            backgroundColor: theme.accent,
             opacity: '0.3',
             borderRadius: '100%',
             pointerEvents: 'none',

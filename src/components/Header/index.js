@@ -4,6 +4,7 @@ import LightModeIcon from '../../assets/icons/light-mode.webp';
 import { MAX_MOBILE_WIDTH } from '../../constant';
 import ButtonWithReaction from '../ButtonWithReaction';
 import { ThemeContext } from '../ThemeProvider';
+import LatestSevenDays from '../LatestSevenDays';
 
 const Header = () => {
     const { isDarkMode, toggleIsDarkMode, theme } = useContext(ThemeContext);
@@ -33,6 +34,8 @@ const Header = () => {
 
     return (
         <div style={styles.modeChanger}>
+            <LatestSevenDays />
+
             <div style={{ marginLeft: 'auto' }}></div>
 
             <ButtonWithReaction
