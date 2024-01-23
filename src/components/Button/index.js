@@ -1,5 +1,5 @@
 import { forwardRef, useContext } from 'react';
-import { LayoutContext } from '../../App';
+import { ThemeContext } from '../ThemeProvider';
 
 const Button = forwardRef(function Button({
     children,
@@ -11,7 +11,7 @@ const Button = forwardRef(function Button({
     disabled,
     style
 }, ref) {
-    const { theme } = useContext(LayoutContext);
+    const { theme } = useContext(ThemeContext);
 
     const styles = {
         disabled: {

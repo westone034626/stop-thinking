@@ -1,24 +1,17 @@
 import Main from "./Main";
 import './index.css';
-import { ColorMap, MAX_MOBILE_WIDTH } from './constant';
-import { createContext, useEffect, useMemo } from "react";
-import { useLocalStorageState } from "ahooks";
-import { Header, NumberOfCountByDateProvider } from "./components";
+import { MAX_MOBILE_WIDTH } from './constant';
+import { createContext, useContext, useEffect } from "react";
+import { Header, NumberOfCountByDateProvider, ThemeProvider } from "./components";
+import { ThemeContext } from "./components/ThemeProvider";
 
 export const LayoutContext = createContext();
 
-function LayoutProvider({ children }) {
-  const [isDarkMode, setIsDarkMode] = useLocalStorageState('@stop-thinking/is-dark-mode', { defaultValue: false });
-
-  const layoutContext = useMemo(() => ({
-    isDarkMode,
-    toggleIsDarkMode: () => setIsDarkMode((p) => !p),
-    theme: ColorMap[isDarkMode ? 'dark' : 'light'],
-    reverseTheme: ColorMap[isDarkMode ? 'light' : 'dark'],
-  }), [isDarkMode]);
+function Layout({ children }) {
+  const { theme } = useContext(ThemeContext);
 
   const styles = {
-    container: { flex: 1, ...layoutContext.theme },
+    container: { flex: 1, ...theme },
     innerContainer: {
       flex: 1,
       width: '100%',
@@ -28,15 +21,13 @@ function LayoutProvider({ children }) {
   };
 
   return (
-    <LayoutContext.Provider value={layoutContext}>
-      <div style={styles.container}>
-        <div style={styles.innerContainer}>
-          <Header />
+    <div style={styles.container}>
+      <div style={styles.innerContainer}>
+        <Header />
 
-          {children}
-        </div>
+        {children}
       </div>
-    </LayoutContext.Provider>
+    </div>
   );
 }
 
@@ -60,9 +51,11 @@ function App() {
 
   return (
     <NumberOfCountByDateProvider>
-      <LayoutProvider>
-        <Main />
-      </LayoutProvider>
+      <ThemeProvider>
+        <Layout>
+          <Main />
+        </Layout>
+      </ThemeProvider>
     </NumberOfCountByDateProvider>
   );
 }

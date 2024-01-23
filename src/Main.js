@@ -6,12 +6,12 @@ import DFingerPrint from './assets/icons/fingerprint-dark_mode.webp';
 import { ButtonWithReaction, Spacer } from './components';
 import { INITIAL_REMAINING_SECONDS } from './constant';
 import { attachLeadingZero, convertSecondsToMinutesAndSeconds } from './utils';
-import { LayoutContext } from './App';
 import useTodayCount from './hooks/useTodayCount';
+import { ThemeContext } from './components/ThemeProvider';
 
 export default function Main() {
     const { todayCount, increaseTodayCount } = useTodayCount();
-    const { isDarkMode, theme, reverseTheme } = useContext(LayoutContext);
+    const { isDarkMode, theme, reverseTheme } = useContext(ThemeContext);
 
     const [remainingSeconds, setRemainingSeconds] = useState(INITIAL_REMAINING_SECONDS);
 

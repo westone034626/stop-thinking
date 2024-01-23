@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import DarkModeIcon from '../../assets/icons/dark-mode.webp';
 import LightModeIcon from '../../assets/icons/light-mode.webp';
-import { LayoutContext } from '../../App';
 import { MAX_MOBILE_WIDTH } from '../../constant';
 import ButtonWithReaction from '../ButtonWithReaction';
+import { ThemeContext } from '../ThemeProvider';
 
 const Header = () => {
-    const { isDarkMode, toggleIsDarkMode, theme } = useContext(LayoutContext);
+    const { isDarkMode, toggleIsDarkMode, theme } = useContext(ThemeContext);
 
     const styles = {
         container: { flex: 1, ...theme },
