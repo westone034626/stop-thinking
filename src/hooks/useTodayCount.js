@@ -1,11 +1,9 @@
-import { useLocalStorageState } from 'ahooks';
-import { useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
+import { NumberOfCountByDateContext } from '../components/NumberOfCountByDateProvider';
 
 const useTodayCount = () => {
-    const [numberOfCountByDate, setNumberOfCountByDate] = useLocalStorageState('@stop-thinking/number-of-count-by-date', {
-        defaultValue: {}
-    });
+    const [numberOfCountByDate, setNumberOfCountByDate] = useContext(NumberOfCountByDateContext);
 
     const today = dayjs(Date.now()).format('YYYY-MM-DD');
 

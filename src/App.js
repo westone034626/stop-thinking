@@ -3,7 +3,7 @@ import './index.css';
 import { ColorMap, MAX_MOBILE_WIDTH } from './constant';
 import { createContext, useEffect, useMemo } from "react";
 import { useLocalStorageState } from "ahooks";
-import { Header } from "./components";
+import { Header, NumberOfCountByDateProvider } from "./components";
 
 export const LayoutContext = createContext();
 
@@ -59,9 +59,11 @@ function App() {
   }, []);
 
   return (
-    <LayoutProvider>
-      <Main />
-    </LayoutProvider>
+    <NumberOfCountByDateProvider>
+      <LayoutProvider>
+        <Main />
+      </LayoutProvider>
+    </NumberOfCountByDateProvider>
   );
 }
 

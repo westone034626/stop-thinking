@@ -21,9 +21,6 @@ export default function Main() {
         const timeId = setInterval(() => {
             setRemainingSeconds(prev => {
                 if (isFingerPrintActive) {
-                    if (prev === 1) {
-                        increaseTodayCount();
-                    }
                     return prev > 0 ? prev - 1 : prev;
                 } else {
                     if (prev === 0) {
@@ -35,7 +32,13 @@ export default function Main() {
         }, 1000);
 
         return () => clearInterval(timeId);
-    }, [isFingerPrintActive, increaseTodayCount]);
+    }, [isFingerPrintActive]);
+
+    useEffect(() => {
+        if (remainingSeconds === 0) {
+            increaseTodayCount();
+        }
+    }, [remainingSeconds]);
 
     const displayTime = (seconds) => {
         const time = convertSecondsToMinutesAndSeconds(seconds);
