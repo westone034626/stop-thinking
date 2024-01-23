@@ -1,11 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import FingerPrint from './assets/icons/fingerprint.webp';
 import Reset from './assets/icons/reset.webp';
+import DReset from './assets/icons/reset-dark_mode.webp';
+import DFingerPrint from './assets/icons/fingerprint-dark_mode.webp';
 import { Button, Spacer } from './components';
-import { INITIAL_REMAINING_SECONDS, SHAPE_COLOR_MAP } from './constant';
+import { INITIAL_REMAINING_SECONDS } from './constant';
 import { attachLeadingZero, convertSecondsToMinutesAndSeconds } from './utils';
+import { LayoutContext } from './App';
 
 export default function Main() {
+    const { isDarkMode, theme } = useContext(LayoutContext);
+
     const [remainingSeconds, setRemainingSeconds] = useState(INITIAL_REMAINING_SECONDS);
 
     const [isFingerPrintActive, setIsFingerPrintActive] = useState(false);
@@ -35,25 +40,35 @@ export default function Main() {
     };
 
     const styles = {
-        container: { alignItems: 'center', margin: 'auto 0px', backgroundColor: SHAPE_COLOR_MAP.white },
+        container: {
+            alignItems: 'center',
+            margin: 'auto 0px',
+            ...theme,
+        },
         brain: {},
-        timer: { fontSize: 60 },
-        fingerPrintContainer: { backgroundColor: SHAPE_COLOR_MAP.white, padding: 20, margin: -20 },
+        timer: {
+            fontSize: 60,
+            ...theme,
+        },
+        fingerPrintContainer: { padding: 20, margin: -20, ...theme, },
         fingerPrint: {},
         touchAreaOverLay: {
             position: 'absolute',
             width: 105,
             height: 105,
             backgroundColor: '#0F30E0',
-            opacity: '0.07',
+            opacity: '0.3',
             borderRadius: '100%',
             pointerEvents: 'none',
         },
-        resetContainer: { backgroundColor: SHAPE_COLOR_MAP.white, padding: 20, margin: -20 },
+        resetContainer: { padding: 20, margin: -20, ...theme },
         reset: {},
     };
 
     const resetRemainingSeconds = () => setRemainingSeconds(INITIAL_REMAINING_SECONDS);
+
+    const resetIcon = isDarkMode ? DReset : Reset;
+    const fingerPrintIcon = isDarkMode ? DFingerPrint : FingerPrint;
 
     return (
         <div style={styles.container}>
@@ -79,7 +94,7 @@ export default function Main() {
                         setIsResetActive(false);
                     }}
                 >
-                    <img style={styles.reset} src={Reset} width={48} height={48} />
+                    <img style={styles.reset} src={resetIcon} width={48} height={48} />
                 </Button>
 
                 {isResetActive && <div style={styles.touchAreaOverLay}></div>}
@@ -95,7 +110,7 @@ export default function Main() {
                     onMouseDown={() => setIsFingerPrintActive(true)}
                     onMouseUp={() => setIsFingerPrintActive(false)}
                 >
-                    <img style={styles.fingerPrint} src={FingerPrint} width={56} height={56} draggable="false" />
+                    <img style={styles.fingerPrint} src={fingerPrintIcon} width={56} height={56} draggable="false" />
                 </Button>
 
                 {isFingerPrintActive && <div style={styles.touchAreaOverLay}></div>}

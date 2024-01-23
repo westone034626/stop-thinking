@@ -1,19 +1,36 @@
 import Main from "./Main";
 import './index.css';
-import { MAX_MOBILE_WIDTH } from './constant';
-import { useEffect } from "react";
+import { ColorMap, MAX_MOBILE_WIDTH } from './constant';
+import { createContext, useEffect, useMemo, useReducer } from "react";
 
-function Layout({ children }) {
+export const LayoutContext = createContext();
+
+function LayoutProvider({ children }) {
+  const [isDarkMode, toggleIsDarkMode] = useReducer((s) => !s, false);
+  const layoutContext = useMemo(() => ({
+    isDarkMode,
+    toggleIsDarkMode,
+    theme: ColorMap[isDarkMode ? 'dark' : 'light'],
+  }), [isDarkMode]);
+
   const styles = {
-    container: {
+    container: { flex: 1, ...layoutContext.theme },
+    innerContainer: {
       flex: 1,
       width: '100%',
       maxWidth: MAX_MOBILE_WIDTH,
       margin: '0px auto',
     }
   };
+
   return (
-    <div style={styles.container}>{children}</div>
+    <div style={styles.container}>
+      <div style={styles.innerContainer}>
+        <LayoutContext.Provider value={layoutContext}>
+          {children}
+        </LayoutContext.Provider>
+      </div>
+    </div>
   );
 }
 
@@ -36,9 +53,9 @@ function App() {
   }, []);
 
   return (
-    <Layout>
+    <LayoutProvider>
       <Main />
-    </Layout>
+    </LayoutProvider>
   );
 }
 

@@ -129,7 +129,19 @@ const BORDER_COLOR_MAP = {
     normal: '#E1E2E3',
 };
 
+const ColorMap = {
+    light: {
+        color: '#242424',
+        backgroundColor: '#FFFFFF',
+    },
+    dark: {
+        color: '#EDEDED',
+        backgroundColor: '#292929',
+    },
+};
+
 export {
+    ColorMap,
     MAX_MOBILE_WIDTH,
     BORDER_COLOR_MAP,
     FONT_WEIGHT_MAP,
