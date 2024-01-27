@@ -34,5 +34,6 @@ module.exports = {
         'no-else-return': 'off',
         'no-lonely-if': 'off',
         'react/prop-types': 'off',
+        'consistent-return': 'off',
     },
 };

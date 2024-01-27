@@ -8,20 +8,19 @@ const useTimer = ({ initialSeconds, active }) => {
     }, [initialSeconds]);
 
     useEffect(() => {
-        const timeId = setInterval(() => {
-            setSeconds((prev) => {
-                if (active) {
-                    return prev > 0 ? prev - 1 : prev;
-                } else {
-                    if (prev === 0) {
+        if (active) {
+            const timeId = setInterval(() => {
+                setSeconds((prev) => {
+                    if (prev > 0) {
+                        return prev - 1;
+                    } else {
                         return 0;
                     }
-                    return prev < initialSeconds ? prev + 1 : prev;
-                }
-            });
-        }, 1000);
+                });
+            }, 1000);
 
-        return () => clearInterval(timeId);
+            return () => clearInterval(timeId);
+        }
     }, [active, initialSeconds]);
 
     return useMemo(() => [seconds, reset], [seconds, reset]);
