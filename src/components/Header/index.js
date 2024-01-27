@@ -18,6 +18,7 @@ function Header() {
             margin: '0px auto',
         },
         modeChanger: {
+            zIndex: 9999,
             width: '100%',
             position: 'absolute',
             top: 0,
