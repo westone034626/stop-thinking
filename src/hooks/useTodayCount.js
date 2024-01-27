@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 import { NumberOfCountByDateContext } from '../components/NumberOfCountByDateProvider';
 
@@ -13,7 +13,7 @@ const useTodayCount = () => {
         }
     }, [today, numberOfCountByDate, setNumberOfCountByDate]);
 
-    const increaseTodayCount = useCallback(() => {
+    const increaseTodayCount = () => {
         const copiedNumberOfCountByDate = { ...numberOfCountByDate };
         const copiedTodayCounts = [...copiedNumberOfCountByDate[today]];
 
@@ -22,14 +22,14 @@ const useTodayCount = () => {
         copiedNumberOfCountByDate[today] = copiedTodayCounts;
 
         setNumberOfCountByDate(copiedNumberOfCountByDate);
-    }, [today, numberOfCountByDate, setNumberOfCountByDate]);
+    };
 
     const todayCountContext = useMemo(
         () => ({
             todayCount: numberOfCountByDate[today]?.length || 0,
             increaseTodayCount,
         }),
-        [today, numberOfCountByDate, increaseTodayCount],
+        [today, numberOfCountByDate],
     );
 
     return todayCountContext;
