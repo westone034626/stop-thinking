@@ -33,5 +33,6 @@ module.exports = {
         'react/react-in-jsx-scope': 'off',
         'no-else-return': 'off',
         'no-lonely-if': 'off',
+        'react/prop-types': 'off',
     },
 };

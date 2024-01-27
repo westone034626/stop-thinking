@@ -1,16 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
-import Lottie from 'react-lottie';
 import FingerPrint from './assets/icons/fingerprint.webp';
 import Reset from './assets/icons/reset.webp';
 import DReset from './assets/icons/reset-dark_mode.webp';
 import DFingerPrint from './assets/icons/fingerprint-dark_mode.webp';
-import * as FireLottie from './assets/lotties/cute-fire-lottie.json';
 import { ButtonWithReaction, Spacer } from './components';
 import { INITIAL_REMAINING_SECONDS } from './constant';
 import { displayTime } from './utils';
 import useTodayCount from './hooks/useTodayCount';
 import useTimer from './hooks/useTimer';
 import { ThemeContext } from './components/ThemeProvider';
+import Fire from './components/Fire';
 
 const useStyles = () => {
     const { theme } = useContext(ThemeContext);
@@ -43,48 +42,18 @@ export default function Main() {
         active: isFingerPrintActive,
     });
 
-    const [isLottiePaused, setIsLottiePaused] = useState(true);
-
-    useEffect(() => {
-        if (isFingerPrintActive) {
-            setIsLottiePaused(false);
-        } else {
-            setIsLottiePaused(true);
-        }
-    }, [isFingerPrintActive]);
-
     useEffect(() => {
         if (remainingSeconds <= 0) {
             increaseTodayCount();
         }
     }, [remainingSeconds]);
 
-    const resetRemainingSeconds = () => {
-        reset();
-
-        setIsLottiePaused(true);
-    };
-
     const resetIcon = isDarkMode ? DReset : Reset;
     const fingerPrintIcon = isDarkMode ? DFingerPrint : FingerPrint;
 
-    const lottieOptions = {
-        loop: true,
-        autoplay: false,
-        animationData: FireLottie,
-        rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice',
-        },
-    };
-
     return (
         <div style={styles.container}>
-            <Lottie
-                options={lottieOptions}
-                height={100}
-                width={100}
-                isPaused={isLottiePaused}
-            />
+            <Fire active={isFingerPrintActive} />
 
             <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
 
@@ -92,8 +61,8 @@ export default function Main() {
 
             <ButtonWithReaction
                 disabled={INITIAL_REMAINING_SECONDS <= remainingSeconds}
-                onTouchEnd={resetRemainingSeconds}
-                onMouseUp={resetRemainingSeconds}
+                onTouchEnd={reset}
+                onMouseUp={reset}
             >
                 <div style={styles.resetContainer}>
                     <img
