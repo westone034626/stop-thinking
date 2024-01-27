@@ -9,9 +9,8 @@ const useTodayCount = () => {
 
     useEffect(() => {
         if (numberOfCountByDate[today]) {
-            return;
         } else {
-            setNumberOfCountByDate(prev => ({ ...prev, [today]: [] }));
+            setNumberOfCountByDate((prev) => ({ ...prev, [today]: [] }));
         }
     }, [today, numberOfCountByDate]);
 
@@ -26,10 +25,13 @@ const useTodayCount = () => {
         setNumberOfCountByDate(copiedNumberOfCountByDate);
     };
 
-    const todayCountContext = useMemo(() => ({
-        todayCount: numberOfCountByDate[today]?.length || 0,
-        increaseTodayCount,
-    }), [today, numberOfCountByDate]);
+    const todayCountContext = useMemo(
+        () => ({
+            todayCount: numberOfCountByDate[today]?.length || 0,
+            increaseTodayCount,
+        }),
+        [today, numberOfCountByDate],
+    );
 
     return todayCountContext;
 };

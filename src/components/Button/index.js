@@ -1,16 +1,10 @@
 import { forwardRef, useContext } from 'react';
 import { ThemeContext } from '../ThemeProvider';
 
-const Button = forwardRef(function Button({
-    children,
-    onClick,
-    onTouchStart,
-    onTouchEnd,
-    onMouseDown,
-    onMouseUp,
-    disabled,
-    style
-}, ref) {
+const Button = forwardRef(function Button(
+    { children, onClick, onTouchStart, onTouchEnd, onMouseDown, onMouseUp, disabled, style },
+    ref,
+) {
     const { theme } = useContext(ThemeContext);
 
     const styles = {

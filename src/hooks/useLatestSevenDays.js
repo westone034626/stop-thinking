@@ -3,7 +3,9 @@ import { useContext, useMemo } from 'react';
 import { NumberOfCountByDateContext } from '../components/NumberOfCountByDateProvider';
 
 const getLatestSevenDays = () => {
-    return Array(7).fill(0).map((_, index) => dayjs().subtract(7 - (index + 1), 'day'));
+    return Array(7)
+        .fill(0)
+        .map((_, index) => dayjs().subtract(7 - (index + 1), 'day'));
 };
 
 const useLatestSevenDays = () => {
@@ -17,10 +19,9 @@ const useLatestSevenDays = () => {
 
             const count = numberOfCountByDate[date]?.length || 0;
 
-            return ({ label: day.format('ddd'), count, today: index + 1 === 7 });
+            return { label: day.format('ddd'), count, today: index + 1 === 7 };
         });
     }, [numberOfCountByDate]);
 };
-
 
 export default useLatestSevenDays;

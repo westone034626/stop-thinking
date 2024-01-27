@@ -6,7 +6,7 @@ import ButtonWithReaction from '../ButtonWithReaction';
 import { ThemeContext } from '../ThemeProvider';
 import LatestSevenDays from '../LatestSevenDays';
 
-const Header = () => {
+function Header() {
     const { isDarkMode, toggleIsDarkMode, theme } = useContext(ThemeContext);
 
     const styles = {
@@ -36,16 +36,21 @@ const Header = () => {
         <div style={styles.modeChanger}>
             <LatestSevenDays />
 
-            <div style={{ marginLeft: 'auto' }}></div>
+            <div style={{ marginLeft: 'auto' }} />
 
             <ButtonWithReaction
                 onClick={toggleIsDarkMode}
                 radius={24}
             >
-                <img style={styles.modeIcon} src={modeIcon} width={24} height={24} />
+                <img
+                    style={styles.modeIcon}
+                    src={modeIcon}
+                    width={24}
+                    height={24}
+                />
             </ButtonWithReaction>
         </div>
     );
-};
+}
 
 export default Header;

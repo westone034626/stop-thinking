@@ -4,7 +4,7 @@ import Spacer from '../Spacer';
 import { FONT_SIZE_MAP, FONT_WEIGHT_MAP } from '../../constant';
 import { ThemeContext } from '../ThemeProvider';
 
-const Day = ({ label, count, today }) => {
+function Day({ label, count, today }) {
     const { theme } = useContext(ThemeContext);
     const styles = {
         container: {
@@ -29,12 +29,12 @@ const Day = ({ label, count, today }) => {
         count: {
             fontSize: FONT_SIZE_MAP.badge,
             fontWeight: FONT_WEIGHT_MAP.badge,
-        }
+        },
     };
 
     return (
         <div style={styles.container}>
-            {today && <div style={styles.indicator}></div>}
+            {today && <div style={styles.indicator} />}
 
             <span style={styles.label}>{label}</span>
 
@@ -43,9 +43,9 @@ const Day = ({ label, count, today }) => {
             <span style={styles.count}>{count}</span>
         </div>
     );
-};
+}
 
-const LatestSevenDays = () => {
+function LatestSevenDays() {
     const latestSevenDays = useLatestSevenDays();
     const { theme } = useContext(ThemeContext);
 
@@ -56,7 +56,7 @@ const LatestSevenDays = () => {
             border: `1px solid ${theme.color}`,
             borderRadius: 4,
             padding: 4,
-        }
+        },
     };
 
     return (
@@ -69,6 +69,6 @@ const LatestSevenDays = () => {
             ))}
         </div>
     );
-};
+}
 
 export default LatestSevenDays;
