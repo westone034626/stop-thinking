@@ -41,17 +41,17 @@ function Layout({ children }) {
 
 function App() {
     useEffect(() => {
-        document.addEventListener('gesturestart', function (e) {
+        document.addEventListener('gesturestart', (e) => {
             e.preventDefault();
             document.body.style.zoom = 1;
         });
 
-        document.addEventListener('gesturechange', function (e) {
+        document.addEventListener('gesturechange', (e) => {
             e.preventDefault();
 
             document.body.style.zoom = 1;
         });
-        document.addEventListener('gestureend', function (e) {
+        document.addEventListener('gestureend', (e) => {
             e.preventDefault();
             document.body.style.zoom = 1;
         });

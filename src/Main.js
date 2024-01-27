@@ -50,7 +50,7 @@ export default function Main() {
 
             setIsFingerPrintActive(false);
         }
-    }, [isFinished]);
+    }, [isFinished, setIsFingerPrintActive, increaseTodayCount]);
 
     const resetIcon = isDarkMode ? DReset : Reset;
     const fingerPrintIcon = isDarkMode ? DFingerPrint : FingerPrint;

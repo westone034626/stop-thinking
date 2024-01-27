@@ -43,6 +43,7 @@ function Header() {
                 radius={24}
             >
                 <img
+                    alt="다크모드 아이콘"
                     style={styles.modeIcon}
                     src={modeIcon}
                     width={24}

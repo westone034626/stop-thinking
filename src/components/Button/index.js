@@ -22,6 +22,7 @@ const Button = forwardRef(function Button(
 
     return (
         <button
+            type="button"
             ref={ref}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}

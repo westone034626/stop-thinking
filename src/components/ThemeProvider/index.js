@@ -14,7 +14,7 @@ function ThemeProvider({ children }) {
             theme: ColorMap[isDarkMode ? 'dark' : 'light'],
             reverseTheme: ColorMap[isDarkMode ? 'light' : 'dark'],
         }),
-        [isDarkMode],
+        [isDarkMode, setIsDarkMode],
     );
 
     return <ThemeContext.Provider value={layoutContext}>{children}</ThemeContext.Provider>;

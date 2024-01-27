@@ -24,7 +24,7 @@ function NumberOfCountByDateProvider({ children }) {
 
     const numberOfCountByDateContext = useMemo(
         () => [numberOfCountByDate, changeNumberOfCountByDate],
-        [numberOfCountByDate],
+        [numberOfCountByDate, changeNumberOfCountByDate],
     );
 
     return (
