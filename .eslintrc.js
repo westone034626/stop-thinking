@@ -35,5 +35,6 @@ module.exports = {
         'no-lonely-if': 'off',
         'react/prop-types': 'off',
         'consistent-return': 'off',
+        'react/jsx-props-no-spreading': 'off',
     },
 };

@@ -1,17 +1,34 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../Button';
 import { ThemeContext } from '../ThemeProvider';
 
 const DEFAULT_RADIUS = 52;
 
-const ButtonWithReaction = ({ children, radius, ...otherProps }) => {
+function ButtonWithReaction({
+    children,
+    radius,
+    disabled,
+    onTouchStart,
+    onTouchEnd,
+    onMouseUp,
+    onMouseDown,
+    ...otherProps
+}) {
+    const { theme } = useContext(ThemeContext);
+
     const [isActive, setIsActive] = useState();
     const handleIsActive = (dataOrFunc) => {
-        if (!otherProps.disabled) {
+        if (!disabled) {
             setIsActive(dataOrFunc);
+        } else {
+            setIsActive(false);
         }
     };
-    const { theme } = useContext(ThemeContext);
+    useEffect(() => {
+        if (disabled) {
+            setIsActive(false);
+        }
+    }, [disabled]);
 
     const overlayRadius = radius ?? DEFAULT_RADIUS;
 
@@ -27,34 +44,41 @@ const ButtonWithReaction = ({ children, radius, ...otherProps }) => {
         },
     };
 
+    const wrapEventHandler = (eventHandler) => (e) => {
+        if (typeof eventHandler === 'function' && !disabled) {
+            eventHandler(e);
+        }
+    };
+
     const handleTouchStart = (e) => {
         handleIsActive(true);
 
-        otherProps.onTouchStart && otherProps.onTouchStart(e);
+        wrapEventHandler(onTouchStart)(e);
     };
 
     const handleTouchEnd = (e) => {
         handleIsActive(false);
 
-        otherProps.onTouchEnd && otherProps.onTouchEnd(e);
+        wrapEventHandler(onTouchEnd)(e);
     };
 
     const handleMouseDown = (e) => {
         handleIsActive(true);
 
-        otherProps.onMouseDown && otherProps.onMouseDown(e);
+        wrapEventHandler(onMouseDown)(e);
     };
 
     const handleMouseUp = (e) => {
         handleIsActive(false);
 
-        otherProps.onMouseUp && otherProps.onMouseUp(e);
+        wrapEventHandler(onMouseUp)(e);
     };
 
     return (
-        <div style={{ position: 'relative', justifyContent: 'center', alignItems: 'center', }}>
+        <div style={{ position: 'relative', justifyContent: 'center', alignItems: 'center' }}>
             <Button
                 {...otherProps}
+                disabled={disabled}
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
                 onMouseDown={handleMouseDown}
@@ -63,9 +87,9 @@ const ButtonWithReaction = ({ children, radius, ...otherProps }) => {
                 {children}
             </Button>
 
-            {isActive && <div style={styles.touchAreaOverLay}></div>}
+            {isActive && <div style={styles.touchAreaOverLay} />}
         </div>
     );
-};
+}
 
 export default ButtonWithReaction;

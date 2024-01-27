@@ -45,6 +45,8 @@ export default function Main() {
     useEffect(() => {
         if (remainingSeconds <= 0) {
             increaseTodayCount();
+
+            setIsFingerPrintActive(false);
         }
     }, [remainingSeconds]);
 
@@ -78,6 +80,7 @@ export default function Main() {
             <Spacer spacing={20} />
 
             <ButtonWithReaction
+                disabled={remainingSeconds <= 0}
                 onTouchStart={() => setIsFingerPrintActive(true)}
                 onTouchEnd={() => setIsFingerPrintActive(false)}
                 onMouseDown={() => setIsFingerPrintActive(true)}
