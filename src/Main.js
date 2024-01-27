@@ -10,6 +10,7 @@ import useTodayCount from './hooks/useTodayCount';
 import useTimer from './hooks/useTimer';
 import { ThemeContext } from './components/ThemeProvider';
 import Fire from './components/Fire';
+import Confetti from './components/Confetti';
 
 const useStyles = () => {
     const { theme } = useContext(ThemeContext);
@@ -41,20 +42,23 @@ export default function Main() {
         initialSeconds: INITIAL_REMAINING_SECONDS,
         active: isFingerPrintActive,
     });
+    const isFinished = remainingSeconds <= 0;
 
     useEffect(() => {
-        if (remainingSeconds <= 0) {
+        if (isFinished) {
             increaseTodayCount();
 
             setIsFingerPrintActive(false);
         }
-    }, [remainingSeconds]);
+    }, [isFinished]);
 
     const resetIcon = isDarkMode ? DReset : Reset;
     const fingerPrintIcon = isDarkMode ? DFingerPrint : FingerPrint;
 
     return (
         <div style={styles.container}>
+            <Confetti active={isFinished} />
+
             <Fire active={isFingerPrintActive} />
 
             <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
@@ -80,7 +84,7 @@ export default function Main() {
             <Spacer spacing={20} />
 
             <ButtonWithReaction
-                disabled={remainingSeconds <= 0}
+                disabled={isFinished}
                 onTouchStart={() => setIsFingerPrintActive(true)}
                 onTouchEnd={() => setIsFingerPrintActive(false)}
                 onMouseDown={() => setIsFingerPrintActive(true)}
