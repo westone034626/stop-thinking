@@ -24,6 +24,7 @@ function Fire({ active }) {
     return (
         <animated.div style={props}>
             <Lottie
+                isClickToPauseDisabled
                 speed={0.7}
                 options={options}
                 height={100}

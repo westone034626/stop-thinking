@@ -14,6 +14,7 @@ function Confetti({ active }) {
 
     return (
         <Lottie
+            isClickToPauseDisabled
             style={{ position: 'absolute', top: 0 }}
             speed={1}
             options={options}
