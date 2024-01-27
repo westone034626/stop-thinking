@@ -23,7 +23,7 @@ export default function Main() {
 
     useEffect(() => {
         const timeId = setInterval(() => {
-            setRemainingSeconds(prev => {
+            setRemainingSeconds((prev) => {
                 if (isFingerPrintActive) {
                     return prev > 0 ? prev - 1 : prev;
                 } else {
@@ -42,7 +42,7 @@ export default function Main() {
         if (isFingerPrintActive) {
             setIsLottiePaused(false);
         } else {
-            if(remainingSeconds > 0) {
+            if (remainingSeconds > 0) {
                 setIsLottiePaused(true);
             }
         }
@@ -78,13 +78,12 @@ export default function Main() {
             borderRadius: 4,
             ...reverseTheme,
         },
-        badgeLabel: {
-        },
+        badgeLabel: {},
         timer: {
             fontSize: 60,
             ...theme,
         },
-        fingerPrintContainer: { padding: 20, margin: -20, ...theme, },
+        fingerPrintContainer: { padding: 20, margin: -20, ...theme },
         fingerPrint: {},
         touchAreaOverLay: {
             position: 'absolute',
@@ -100,7 +99,7 @@ export default function Main() {
     };
 
     const resetRemainingSeconds = () => {
-        setRemainingSeconds(INITIAL_REMAINING_SECONDS)
+        setRemainingSeconds(INITIAL_REMAINING_SECONDS);
 
         setIsLottiePaused(true);
     };
@@ -110,12 +109,12 @@ export default function Main() {
 
     const lottieOptions = {
         loop: true,
-        autoplay: false, 
+        autoplay: false,
         animationData: FireLottie,
         rendererSettings: {
-          preserveAspectRatio: 'xMidYMid slice'
-        }
-      };
+            preserveAspectRatio: 'xMidYMid slice',
+        },
+    };
 
     return (
         <div style={styles.container}>
@@ -148,7 +147,13 @@ export default function Main() {
                 onMouseUp={resetRemainingSeconds}
             >
                 <div style={styles.resetContainer}>
-                    <img style={styles.reset} src={resetIcon} width={48} height={48} />
+                    <img
+                        alt="리와인드 아이콘"
+                        style={styles.reset}
+                        src={resetIcon}
+                        width={48}
+                        height={48}
+                    />
                 </div>
             </ButtonWithReaction>
 
@@ -161,7 +166,14 @@ export default function Main() {
                 onMouseUp={() => setIsFingerPrintActive(false)}
             >
                 <div style={styles.fingerPrintContainer}>
-                    <img style={styles.fingerPrint} src={fingerPrintIcon} width={56} height={56} draggable="false" />
+                    <img
+                        alt="지문 아이콘"
+                        style={styles.fingerPrint}
+                        src={fingerPrintIcon}
+                        width={56}
+                        height={56}
+                        draggable="false"
+                    />
                 </div>
             </ButtonWithReaction>
         </div>
