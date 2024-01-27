@@ -74,7 +74,7 @@ const fontStyleMap = {
         fontWeight: FONT_WEIGHT_MAP.badge,
         fontSize: FONT_SIZE_MAP.badge,
         color: FONT_COLOR_MAP.badge,
-    }
+    },
 };
 
 const SHAPE_COLOR_MAP = {
@@ -122,7 +122,7 @@ const shapeStyleMap = {
         backgroundColor: SHAPE_COLOR_MAP.white,
         border: SHAPE_BORDER_MAP.buttonOutlined,
         borderRadius: SHAPE_ROUNDESS_MAP.normal,
-    }
+    },
 };
 
 const BORDER_COLOR_MAP = {

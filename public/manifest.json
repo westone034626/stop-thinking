@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Dopamine detox",
+  "name": "5분 동안 전자기기 사용을 잠시 멈춰보세요.",
   "icons": [
     {
       "src": "favicon.ico",
