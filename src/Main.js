@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
+import Lottie from 'react-lottie';
 import FingerPrint from './assets/icons/fingerprint.webp';
 import Reset from './assets/icons/reset.webp';
 import DReset from './assets/icons/reset-dark_mode.webp';
 import DFingerPrint from './assets/icons/fingerprint-dark_mode.webp';
+import * as FireLottie from './assets/lotties/cute-fire-lottie.json';
 import { ButtonWithReaction, Spacer } from './components';
 import { INITIAL_REMAINING_SECONDS } from './constant';
 import { attachLeadingZero, convertSecondsToMinutesAndSeconds } from './utils';
@@ -10,12 +12,14 @@ import useTodayCount from './hooks/useTodayCount';
 import { ThemeContext } from './components/ThemeProvider';
 
 export default function Main() {
-    const { todayCount, increaseTodayCount } = useTodayCount();
+    const { increaseTodayCount } = useTodayCount();
     const { isDarkMode, theme, reverseTheme } = useContext(ThemeContext);
 
     const [remainingSeconds, setRemainingSeconds] = useState(INITIAL_REMAINING_SECONDS);
 
     const [isFingerPrintActive, setIsFingerPrintActive] = useState(false);
+
+    const [isLottiePaused, setIsLottiePaused] = useState(true);
 
     useEffect(() => {
         const timeId = setInterval(() => {
@@ -33,6 +37,16 @@ export default function Main() {
 
         return () => clearInterval(timeId);
     }, [isFingerPrintActive]);
+
+    useEffect(() => {
+        if (isFingerPrintActive) {
+            setIsLottiePaused(false);
+        } else {
+            if(remainingSeconds > 0) {
+                setIsLottiePaused(true);
+            }
+        }
+    }, [isFingerPrintActive, remainingSeconds]);
 
     useEffect(() => {
         if (remainingSeconds === 0) {
@@ -85,10 +99,23 @@ export default function Main() {
         reset: {},
     };
 
-    const resetRemainingSeconds = () => setRemainingSeconds(INITIAL_REMAINING_SECONDS);
+    const resetRemainingSeconds = () => {
+        setRemainingSeconds(INITIAL_REMAINING_SECONDS)
+
+        setIsLottiePaused(true);
+    };
 
     const resetIcon = isDarkMode ? DReset : Reset;
     const fingerPrintIcon = isDarkMode ? DFingerPrint : FingerPrint;
+
+    const lottieOptions = {
+        loop: true,
+        autoplay: false, 
+        animationData: FireLottie,
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid slice'
+        }
+      };
 
     return (
         <div style={styles.container}>
@@ -96,13 +123,22 @@ export default function Main() {
 
             <Spacer spacing={18} /> */}
 
-            <div style={styles.badgeAndTimerContainer}>
+            <Lottie
+                options={lottieOptions}
+                height={100}
+                width={100}
+                isPaused={isLottiePaused}
+            />
+
+            {/* <div style={styles.badgeAndTimerContainer}>
                 <div style={styles.badge}>
                     <span style={styles.badgeLabel}>{todayCount}</span>
                 </div>
 
                 <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
-            </div>
+            </div> */}
+
+            <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
 
             <Spacer spacing={20} />
 
