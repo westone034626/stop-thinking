@@ -9,7 +9,10 @@ const convertSecondsToMinutesAndSeconds = (seconds) => {
     return { minutes, seconds: remainingSeconds };
 };
 
-export {
-    attachLeadingZero,
-    convertSecondsToMinutesAndSeconds,
+const displayTime = (seconds) => {
+    const time = convertSecondsToMinutesAndSeconds(seconds);
+
+    return `${attachLeadingZero(time.minutes)}:${attachLeadingZero(time.seconds)}`;
 };
+
+export { attachLeadingZero, convertSecondsToMinutesAndSeconds, displayTime };

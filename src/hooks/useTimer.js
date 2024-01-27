@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 const useTimer = ({ initialSeconds, active }) => {
     const [seconds, setSeconds] = useState(initialSeconds);
+
+    const reset = useCallback(() => {
+        setSeconds(initialSeconds);
+    }, [initialSeconds]);
 
     useEffect(() => {
         const timeId = setInterval(() => {
@@ -20,7 +24,7 @@ const useTimer = ({ initialSeconds, active }) => {
         return () => clearInterval(timeId);
     }, [active, initialSeconds]);
 
-    return seconds;
+    return useMemo(() => [seconds, reset], [seconds, reset]);
 };
 
 export default useTimer;

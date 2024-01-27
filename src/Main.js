@@ -7,99 +7,60 @@ import DFingerPrint from './assets/icons/fingerprint-dark_mode.webp';
 import * as FireLottie from './assets/lotties/cute-fire-lottie.json';
 import { ButtonWithReaction, Spacer } from './components';
 import { INITIAL_REMAINING_SECONDS } from './constant';
-import { attachLeadingZero, convertSecondsToMinutesAndSeconds } from './utils';
+import { displayTime } from './utils';
 import useTodayCount from './hooks/useTodayCount';
+import useTimer from './hooks/useTimer';
 import { ThemeContext } from './components/ThemeProvider';
 
-export default function Main() {
-    const { increaseTodayCount } = useTodayCount();
-    const { isDarkMode, theme, reverseTheme } = useContext(ThemeContext);
+const useStyles = () => {
+    const { theme } = useContext(ThemeContext);
 
-    const [remainingSeconds, setRemainingSeconds] = useState(INITIAL_REMAINING_SECONDS);
-
-    const [isFingerPrintActive, setIsFingerPrintActive] = useState(false);
-
-    const [isLottiePaused, setIsLottiePaused] = useState(true);
-
-    useEffect(() => {
-        const timeId = setInterval(() => {
-            setRemainingSeconds((prev) => {
-                if (isFingerPrintActive) {
-                    return prev > 0 ? prev - 1 : prev;
-                } else {
-                    if (prev === 0) {
-                        return 0;
-                    }
-                    return prev < INITIAL_REMAINING_SECONDS ? prev + 1 : prev;
-                }
-            });
-        }, 1000);
-
-        return () => clearInterval(timeId);
-    }, [isFingerPrintActive]);
-
-    useEffect(() => {
-        if (isFingerPrintActive) {
-            setIsLottiePaused(false);
-        } else {
-            if (remainingSeconds > 0) {
-                setIsLottiePaused(true);
-            }
-        }
-    }, [isFingerPrintActive, remainingSeconds]);
-
-    useEffect(() => {
-        if (remainingSeconds === 0) {
-            increaseTodayCount();
-        }
-    }, [remainingSeconds]);
-
-    const displayTime = (seconds) => {
-        const time = convertSecondsToMinutesAndSeconds(seconds);
-
-        return `${attachLeadingZero(time.minutes)}:${attachLeadingZero(time.seconds)}`;
-    };
-
-    const styles = {
+    return {
         container: {
             alignItems: 'center',
             margin: 'auto 0px',
             ...theme,
         },
-        brain: {},
-        badgeAndTimerContainer: {
-            position: 'relative',
-        },
-        badge: {
-            position: 'absolute',
-            top: -20,
-            right: -16,
-            padding: 4,
-            borderRadius: 4,
-            ...reverseTheme,
-        },
-        badgeLabel: {},
         timer: {
             fontSize: 60,
             ...theme,
         },
         fingerPrintContainer: { padding: 20, margin: -20, ...theme },
         fingerPrint: {},
-        touchAreaOverLay: {
-            position: 'absolute',
-            width: 105,
-            height: 105,
-            backgroundColor: '#0F30E0',
-            opacity: '0.3',
-            borderRadius: '100%',
-            pointerEvents: 'none',
-        },
         resetContainer: { padding: 20, margin: -20, ...theme },
-        reset: {},
     };
+};
+
+export default function Main() {
+    const { increaseTodayCount } = useTodayCount();
+    const styles = useStyles();
+    const { isDarkMode } = useContext(ThemeContext);
+
+    const [isFingerPrintActive, setIsFingerPrintActive] = useState(false);
+
+    const [remainingSeconds, reset] = useTimer({
+        initialSeconds: INITIAL_REMAINING_SECONDS,
+        active: isFingerPrintActive,
+    });
+
+    const [isLottiePaused, setIsLottiePaused] = useState(true);
+
+    useEffect(() => {
+        if (isFingerPrintActive) {
+            setIsLottiePaused(false);
+        } else {
+            setIsLottiePaused(true);
+        }
+    }, [isFingerPrintActive]);
+
+    useEffect(() => {
+        if (remainingSeconds <= 0) {
+            increaseTodayCount();
+        }
+    }, [remainingSeconds]);
 
     const resetRemainingSeconds = () => {
-        setRemainingSeconds(INITIAL_REMAINING_SECONDS);
+        reset();
 
         setIsLottiePaused(true);
     };
@@ -118,24 +79,12 @@ export default function Main() {
 
     return (
         <div style={styles.container}>
-            {/* <img style={styles.brain} src={Brain} width={82} height={82} />
-
-            <Spacer spacing={18} /> */}
-
             <Lottie
                 options={lottieOptions}
                 height={100}
                 width={100}
                 isPaused={isLottiePaused}
             />
-
-            {/* <div style={styles.badgeAndTimerContainer}>
-                <div style={styles.badge}>
-                    <span style={styles.badgeLabel}>{todayCount}</span>
-                </div>
-
-                <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
-            </div> */}
 
             <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
 
