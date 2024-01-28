@@ -5,6 +5,7 @@ import './index.css';
 import { MAX_MOBILE_WIDTH } from './constant';
 import { Header, NumberOfCountByDateProvider, ThemeProvider } from './components';
 import { ThemeContext } from './components/ThemeProvider';
+import MutedProvider from './components/MutedProvider';
 
 export const LayoutContext = createContext();
 
@@ -60,9 +61,11 @@ function App() {
     return (
         <NumberOfCountByDateProvider>
             <ThemeProvider>
-                <Layout>
-                    <Main />
-                </Layout>
+                <MutedProvider>
+                    <Layout>
+                        <Main />
+                    </Layout>
+                </MutedProvider>
             </ThemeProvider>
         </NumberOfCountByDateProvider>
     );

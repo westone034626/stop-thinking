@@ -12,6 +12,7 @@ import { ThemeContext } from './components/ThemeProvider';
 import FireLottie from './components/FireLottie';
 import ConfettiLottie from './components/ConfettiLottie';
 import FireCracklingSound from './components/FireCracklingSound';
+import { MutedContext } from './components/MutedProvider';
 
 const useStyles = () => {
     const { theme } = useContext(ThemeContext);
@@ -36,6 +37,7 @@ export default function Main() {
     const { increaseTodayCount } = useTodayCount();
     const styles = useStyles();
     const { isDarkMode } = useContext(ThemeContext);
+    const { muted } = useContext(MutedContext);
 
     const [isFingerPrintActive, setIsFingerPrintActive] = useState(false);
 
@@ -103,7 +105,10 @@ export default function Main() {
                 </div>
             </ButtonWithReaction>
 
-            <FireCracklingSound active={isFingerPrintActive} />
+            <FireCracklingSound
+                active={isFingerPrintActive}
+                muted={muted}
+            />
         </div>
     );
 }

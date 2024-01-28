@@ -39,5 +39,6 @@ module.exports = {
         'react-hooks/exhaustive-deps': 'warn',
         'no-unused-vars': 'warn',
         'import/no-extraneous-dependencies': 'warn',
+        'no-nested-ternary': 'off',
     },
 };
