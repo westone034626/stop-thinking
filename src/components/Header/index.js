@@ -42,9 +42,9 @@ function Header() {
         icon: {},
     };
 
-    const modeIcon = isDarkMode ? LightModeIcon : DarkModeIcon;
+    const modeIcon = isDarkMode ? DarkModeIcon : LightModeIcon;
 
-    const soundIcon = muted ? (isDarkMode ? DSoundIcon : SoundIcon) : isDarkMode ? DSoundOffIcon : SoundOffIcon;
+    const soundIcon = muted ? (isDarkMode ? DSoundOffIcon : SoundOffIcon) : isDarkMode ? DSoundIcon : SoundIcon;
 
     return (
         <div style={styles.modeChanger}>
