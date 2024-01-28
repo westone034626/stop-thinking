@@ -37,5 +37,7 @@ module.exports = {
         'consistent-return': 'off',
         'react/jsx-props-no-spreading': 'off',
         'react-hooks/exhaustive-deps': 'warn',
+        'no-unused-vars': 'warn',
+        'import/no-extraneous-dependencies': 'warn',
     },
 };

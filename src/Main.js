@@ -11,6 +11,7 @@ import useTimer from './hooks/useTimer';
 import { ThemeContext } from './components/ThemeProvider';
 import FireLottie from './components/FireLottie';
 import ConfettiLottie from './components/ConfettiLottie';
+import FireCracklingSound from './components/FireCracklingSound';
 
 const useStyles = () => {
     const { theme } = useContext(ThemeContext);
@@ -101,6 +102,8 @@ export default function Main() {
                     />
                 </div>
             </ButtonWithReaction>
+
+            <FireCracklingSound active={isFingerPrintActive} />
         </div>
     );
 }
