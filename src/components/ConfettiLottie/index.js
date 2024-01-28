@@ -1,19 +1,19 @@
 import React from 'react';
-import Lottie from 'react-lottie';
-import * as ConfettiLottie from '../../assets/lotties/confetti.json';
+import ReactLottie from 'react-lottie';
+import * as Lottie from '../../assets/lotties/confetti.json';
 
-function Confetti({ active }) {
+function ConfettiLottie({ active }) {
     const options = {
         loop: false,
         autoplay: false,
-        animationData: ConfettiLottie,
+        animationData: Lottie,
         rendererSettings: {
             preserveAspectRatio: 'xMidYMid slice',
         },
     };
 
     return (
-        <Lottie
+        <ReactLottie
             isClickToPauseDisabled
             style={{ position: 'absolute', top: 0 }}
             speed={1}
@@ -26,4 +26,4 @@ function Confetti({ active }) {
     );
 }
 
-export default Confetti;
+export default ConfettiLottie;

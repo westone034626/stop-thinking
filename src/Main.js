@@ -9,8 +9,8 @@ import { displayTime } from './utils';
 import useTodayCount from './hooks/useTodayCount';
 import useTimer from './hooks/useTimer';
 import { ThemeContext } from './components/ThemeProvider';
-import Fire from './components/Fire';
-import Confetti from './components/Confetti';
+import FireLottie from './components/FireLottie';
+import ConfettiLottie from './components/ConfettiLottie';
 
 const useStyles = () => {
     const { theme } = useContext(ThemeContext);
@@ -57,9 +57,9 @@ export default function Main() {
 
     return (
         <div style={styles.container}>
-            <Confetti active={isFinished} />
+            <ConfettiLottie active={isFinished} />
 
-            <Fire active={isFingerPrintActive} />
+            <FireLottie active={isFingerPrintActive} />
 
             <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
 
