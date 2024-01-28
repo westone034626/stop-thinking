@@ -3,7 +3,7 @@ import React, { createContext, useMemo, useReducer } from 'react';
 export const MutedContext = createContext(false);
 
 function MutedProvider({ children }) {
-    const [muted, toggleMuted] = useReducer((s) => !s, false);
+    const [muted, toggleMuted] = useReducer((s) => !s, true);
 
     const mutedContext = useMemo(
         () => ({
