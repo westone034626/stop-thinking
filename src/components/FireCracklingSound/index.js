@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import Sound from '../../assets/sounds/fire-crackling.mp3';
+import Sound from '../../assets/sounds/fire-crackling-weak.mp3';
 
 const styles = {
     container: { position: 'absolute', width: 1, height: 1, overflow: 'hidden' },
