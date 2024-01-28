@@ -64,6 +64,8 @@ export default function Main() {
 
             <FireLottie active={isFingerPrintActive} />
 
+            <Spacer spacing={4} />
+
             <p style={styles.timer}>{displayTime(remainingSeconds)}</p>
 
             <Spacer spacing={20} />
